@@ -1,0 +1,74 @@
+# Python
+__pycache__/
+*.pyc
+
+# Data (medical imaging)
+data/**
+
+# Allow CSV metadata only
+!data/**/*.csv
+
+# Block imaging formats explicitly
+data/**/*.dcm
+data/**/*.nii
+data/**/*.nii.gz
+data/**/*.npy
+
+# Training outputs
+runs/**/*.npy
+
+# Allow model weights
+!runs/**/checkpoints/*.pt
+
+# Allow PNG visualizations
+!runs/**/*.png
+
+# macOS
+.DS_Store
+# -------------------------
+# Python
+# -------------------------
+__pycache__/
+*.pyc
+*.pyo
+
+# -------------------------
+# Raw & processed medical data (NEVER commit)
+# -------------------------
+data/**
+
+# Allow directory structure only
+!data/
+!data/**/
+
+# Allow metadata CSVs
+!data/**/*.csv
+
+# Explicitly block medical imaging formats
+data/**/*.dcm
+data/**/*.nii
+data/**/*.nii.gz
+data/**/*.npy
+
+# -------------------------
+# Training outputs
+# -------------------------
+runs/**/*.npy
+runs/**/checkpoints/*.pth
+runs/**/checkpoints/*.ckpt
+
+# -------------------------
+# Allow model weights (PyTorch)
+# -------------------------
+!runs/**/checkpoints/*.pt
+
+# -------------------------
+# Allow visualizations
+# -------------------------
+!runs/**/*.png
+
+# -------------------------
+# OS files
+# -------------------------
+.DS_Store
+

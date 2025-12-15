@@ -1,0 +1,7 @@
+LAT View Synthesis Evaluation (0° → 90°)
+======================================
+
+Number of evaluated test cases: 54
+
+Mean PSNR: 22.60
+Mean SSIM: 0.832
