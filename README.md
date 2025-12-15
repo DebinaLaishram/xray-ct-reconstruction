@@ -141,27 +141,24 @@ the AP X-ray into the CT voxel space.
 
 ### Notation
 
-- \( I_{\text{in}} \in \mathbb{R}^{H \times W} \): input AP (0°) X-ray  
-- \( V_{\text{bp}} \in \mathbb{R}^{H \times W \times D} \): back-projected 3D volume  
-- \( (x, y) \): pixel coordinates  
-- \( z \): depth index  
-- \( D \): number of depth slices  
+- I_in ∈ R^{H × W}: input AP (0°) X-ray  
+- V_bp ∈ R^{H × W × D}: back-projected 3D volume  
+- (x, y): pixel coordinates  
+- z: depth index  
+- D: number of depth slices
 
 ---
 
 ### Back-Projection Operator
 
 The back-projected volume is defined as:
-
-\[
-V_{\text{bp}} = \mathrm{BP}(I_{\text{in}})
-\]
+V_bp = BP(I_in)
 
 For an AP acquisition, each pixel value is replicated uniformly along the depth dimension:
+V_bp(x, y, z) ∝ I_in(x, y), for all z ∈ {1, …, D}
 
-\[
-V_{\text{bp}}(x, y, z) \propto I_{\text{in}}(x, y), \quad \forall z \in \{1, \dots, D\}
-\]
+This simplified formulation conveys the idea of depth-wise back-projection; the full operator definition,
+including geometric constraints and normalization, follows Eq. 1 in the original paper.
 
 ---
 
@@ -177,7 +174,7 @@ This behavior is expected and confirms the correctness of the back-projection.
 
 ### Purpose of the Rough 3D Volume
 
-The back-projected volume \( V_{\text{bp}} \):
+The back-projected volume V_bp:
 
 - Is **not** a valid CT reconstruction  
 - Acts as a **geometrically aligned 3D scaffold**  
@@ -190,7 +187,7 @@ The back-projected volume \( V_{\text{bp}} \):
 
 Each training sample consists of:
 
-- **Input:** rough 3D volume \( V_{\text{bp}} \)  
+- **Input:** rough 3D volume V_bp
 - **Target:** ground-truth CT volume  
 
 Samples are matched strictly by **LIDC-ID**.
@@ -208,7 +205,7 @@ This format is directly compatible with PyTorch `Conv3d`.
 
 A 3D U-Net is trained to map the rough 3D volume to a refined CT volume.
 
-- **Input:** \( V_{\text{bp}} \)  
+- **Input:** rough 3D volume V_bp
 - **Output:** refined 3D CT volume  
 
 Architecture:
@@ -243,9 +240,10 @@ Outputs include:
 
 After CT refinement, a lateral (90°) X-ray view is synthesized via forward projection:
 
-\[
-I_{\text{LAT}}(y, z) = \sum_x V_{\text{CT}}(x, y, z)
-\]
+I_LAT(y, z) = ∑ₓ V_CT(x, y, z)
+
+This expression illustrates the principle of forward projection for a canonical lateral view; the full
+geometry-aware formulation follows Eq. 9 in the original paper using a differentiable CT-to-X-ray projector.
 
 - Script: `src/pipeline/forwardprojection.py`  
 - Output: predicted LAT view stored as `.npy`
@@ -280,5 +278,5 @@ On the held-out test set, the developed pipeline achieves:
 - **PSNR ≈ 22.6**
 - **SSIM ≈ 0.83**
 
-These results exceed the baseline performance reported in Table VI of the reference paper for
+These results are competitive with and exceed the baseline performance reported in Table VI of the reference paper for
 0° → 90° new view synthesis.
