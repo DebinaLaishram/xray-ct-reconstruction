@@ -1,3 +1,20 @@
+> **Project Status Notice**
+>
+> This repository currently contains an **initial baseline implementation** of an X-ray → CT reconstruction pipeline.
+>
+> The baseline is preserved for transparency and reproducibility and is tagged as:
+>
+> **`legacy-v0.1-simple-projection`**
+>
+> This version uses simplified projection assumptions and a generic 3D U-Net architecture and **does not fully implement the geometry-aware projection model or network design described in the reference paper**.
+>
+> Active development is focused on a **paper-faithful reimplementation**, including:
+> - Orientation-standardized CT volumes
+> - Geometry-aware backprojection and forward projection
+> - A refinement network aligned with the paper’s architecture
+>
+> Legacy code is retained intentionally to enable comparison and ablation.
+
 # X-ray → CT Reconstruction Pipeline
 
 This repository implements an X-ray to CT reconstruction pipeline inspired by  
