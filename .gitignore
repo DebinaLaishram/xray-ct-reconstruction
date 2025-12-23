@@ -72,3 +72,6 @@ runs/**/checkpoints/*.ckpt
 # -------------------------
 .DS_Store
 
+# Training artifacts
+runs/**/checkpoints/*.pt
+
